@@ -6,7 +6,7 @@
 
 **MoEQUANT**, a novel post-training quantization framework tailored for Mixture-of-Experts (MoE) large language models, integrates Expert-Balanced Self-Sampling (EBSS) and Affinity-Guided Quantization (AGQ) to optimize both calibration and quantization processes. MoEQuant successfully quantizes MoE-based LLMs to low-bit precision with minimal accuracy loss, achieving near-floating-point performance and enhanced generalization across various models. This marks the first comprehensive PTQ solution specifically designed for MoE architectures.
 
-This repository accompanies our ICML 2025 manuscript titled **"MoEQuant: Quantizing the Mixture-of-Expert Large Language Models with Inter- and Intra-Expert Balance"**. 
+This repository accompanies our ICML 2025 manuscript titled **"Enhancing Quantization for Mixture-of-Experts Large Language Models via Expert-Balanced Sampling and Affinity Guidance"**. 
 
 ## Table of Contents
 
