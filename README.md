@@ -1,4 +1,4 @@
-# MoEQuant: Quantizing the Mixture-of-Expert Large Language Models with Inter- and Intra-Expert Balance
+# MoEQuant: Enhancing Quantization for Mixture-of-Experts Large Language Models via Expert-Balanced Sampling and Affinity Guidance
 
 ![MoEQUANT Logo](https://github.com/yourusername/moequant/blob/main/assets/logo.png)
 
@@ -10,7 +10,7 @@ This repository accompanies our ICML 2025 manuscript titled **"MoEQuant: Quantiz
 
 ## Table of Contents
 
-- [MoEQuant: Quantizing the Mixture-of-Expert Large Language Models with Inter- and Intra-Expert Balance](#moequant-quantizing-the-mixture-of-expert-large-language-models-with-inter--and-intra-expert-balance)
+- [MoEQuant: Enhancing Quantization for Mixture-of-Experts Large Language Models via Expert-Balanced Sampling and Affinity Guidance](#moequant-enhancing-quantization-for-mixture-of-experts-large-language-models-via-expert-balanced-sampling-and-affinity-guidance)
   - [Overview](#overview)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
@@ -47,6 +47,6 @@ If you find MoEQuant useful in your research, please consider citing our paper:
 
 ```bibtex
 @inproceedings{moequant2025,
-  title={MoEQuant: Quantizing the Mixture-of-Expert Large Language Models with Inter- and Intra-Expert Balance}
+  title={MoEQuant: Enhancing Quantization for Mixture-of-Experts Large Language Models via Expert-Balanced Sampling and Affinity Guidance}
   ...
 }
