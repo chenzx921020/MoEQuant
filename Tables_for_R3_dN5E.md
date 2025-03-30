@@ -1,4 +1,13 @@
-Table R1: 不同校准集对专家平衡性和Performance的影响
+Table R1: The influence of different calibration datasets on the balance of experts and quantization performance, the expert balance std denotes the standard deviation on frequency of experts
+
+| Model | Calib Dataset | Expert Balance STD  | WIKITEXT2 | MMLU | HUMANEVAL | GSM8K | Accuracy AVG | 
+| :--------------: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| DeepSeek-MoE-16B | Float |       | 6.51 | 44.60 | 26.83 | 20.16 | 30.53 |
+|                  | RTN   |       | 7.47 | 36.10 | 18.90 | 10.54 | 21.84 | 
+|                  | wikitext2 | 0.1327 | 6.67 | 40.60 | 22.56 | 19.18 | 27.45 |
+|                  | humaneval | 0.0877 | 6.85 | 43.60 | 21.34 | 15.39 | 26.79 |
+|                  | gsm8k     | 0.0728 | 6.79 | 43.40 | 21.95 | 18.59 | 27.98 |
+|                  | EBSS      | 0.0052 | 6.77 | 44.00 | 23.78 | 18.19 | 28.65 |
 
 
 ---

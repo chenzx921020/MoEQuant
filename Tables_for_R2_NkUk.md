@@ -2,12 +2,15 @@ Table R1: W4A4 Performace of MoEquant on various models.
 
 | Model            | Method          | WikiText2 PPL | Avg Accuracy |
 | ---------------- | --------------- | :-----------: | :----------: |
-| Qwen-MoE-14B     | QuaRot+GPTQ     |               |              |
-|                  | MoEQuant        |               |              |
-| DeepSeek-MoE-16B | QuaRot+GPTQ     |               |              |
-|                  | QuaRot+MoEQuant |               |              |
-| Mixtral-8x7B     | QuaRot+GPTQ     |               |              |
-|                  | QuaRot+MoEQuant |               |              |
+| Qwen-MoE-14B     | Float           |    7.22       |     51.22    |
+|                  | QuaRot+GPTQ     |    8.40       |     46.30    |
+|                  | MoEQuant        |    8.54       |     49.02    |
+| DeepSeek-MoE-16B | Float           |    6.51       |     40.86    |
+|                  | QuaRot+GPTQ     |    7.82       |     32.33    |
+|                  | QuaRot+MoEQuant |    7.90       |     36.84    |
+| Mixtral-8x7B     | Float           |    3.84       |     56.80    |
+|                  | QuaRot+GPTQ     |    4.82       |     50.22    |
+|                  | QuaRot+MoEQuant |    5.03       |     53.15    |
 
 ---
 
@@ -42,12 +45,12 @@ Table R3: Time Cost Comparison of GPTQ and MoEQuant
 
 | Model            | Method   | Time Cost |
 | ---------------- | -------- | --------- |
-| Qwen-MoE-14B     | GPTQ     |           |
-|                  | MoEQuant |           |
-| DeepSeek-MoE-16B | GPTQ     |           |
-|                  | MoEQuant |           |
-| Mixtral-8x7B     | GPTQ     |           |
-|                  | MoEQuant |           |
+| Qwen-MoE-14B     | GPTQ     |   37mins  |
+|                  | MoEQuant |   54mins  |
+| DeepSeek-MoE-16B | GPTQ     |   41mins  |
+|                  | MoEQuant |   63mins  |
+| Mixtral-8x7B     | GPTQ     |   73mins  |
+|                  | MoEQuant |   97mins  |
 
 ---
 
@@ -55,23 +58,23 @@ Table R4: 4-bit quantization performance of OmniQuant and MoEQuant on Qwen-MoE-1
 
 | Method    | WikiText2 PPL ↓ | C4 PPL ↓ | MMLU | HumanEval | GSM8K | BoolQ | Hellaswag | OpenBookQA | MathQA | Accuracy AVG |
 | --------- | --------------- | -------- | ---- | --------- | ----- | ----- | --------- | ---------- | ------ | ------------ |
-| FP        |                 |          |      |           |       |       |           |            |        |              |
-| OmniQuant |                 |          |      |           |       |       |           |            |        |              |
-| MoEQuant  |                 |          |      |           |       |       |           |            |        |              |
+| FP        |    7.22         |  9.30    | 59.60| 32.32     | 62.55 |79.82  | 57.96     |  30.40     | 35.77  |   51.20      |
+| OmniQuant |    7.67         |  9.98    | 56.30| 31.71     | 52.39 |78.20  | 56.58     | 29.40      | 33.63  |   48.31      |
+| MoEQuant  |    7.55         |  9.62    | 58.30| 29.87     | 58.38 |78.04  | 56.87     | 30.20      | 35.50  |   49.59      |
 
 
 Table R5: 4-bit quantization performance of OmniQuant and MoEQuant on DeepSeek-MoE-16B.
 
 | Method    | WikiText2 PPL ↓ | C4 PPL ↓ | MMLU | HumanEval | GSM8K | BoolQ | Hellaswag | OpenBookQA | MathQA | Accuracy AVG |
 | --------- | --------------- | -------- | ---- | --------- | ----- | ----- | --------- | ---------- | ------ | ------------ |
-| FP        |                 |          |      |           |       |       |           |            |        |              |
-| OmniQuant |                 |          |      |           |       |       |           |            |        |              |
-| MoEQuant  |                 |          |      |           |       |       |           |            |        |              |
+| FP        |     6.51        |   9.04   | 44.60|  26.83    | 20.16 | 72.72 | 58.06     |   32.20    | 31.49  |   40.86      |
+| OmniQuant |     6.79        |   9.49   | 43.50|  21.95    | 18.65 | 73.82 | 56.67     |   32.40    | 31.02  |   39.72      |
+| MoEQuant  |     6.78        |   9.22   | 42.20|  25.00    | 19.18 | 73.49 | 57.20     |   31.40    | 31.66  |   40.01      |
 
 Table R6: 4-bit quantization performance of OmniQuant and MoEQuant on Mixtral-8x7B.
 
 | Method    | WikiText2 PPL ↓ | C4 PPL ↓ | MMLU | HumanEval | GSM8K | BoolQ | Hellaswag | OpenBookQA | MathQA | Accuracy AVG |
 | --------- | --------------- | -------- | ---- | --------- | ----- | ----- | --------- | ---------- | ------ | ------------ |
-| FP        |                 |          |      |           |       |       |           |            |        |              |
-| OmniQuant |                 |          |      |           |       |       |           |            |        |              |
-| MoEQuant  |                 |          |      |           |       |       |           |            |        |              |
+| FP        |    3.84         |  6.87    | 70.50|  32.93    |  65.88| 85.23 |   64.88   |  35.80     |  42.41 |   56.80      |
+| OmniQuant |    4.19         |  7.20    | 68.10|  34.75    |  57.01| 84.13 |   63.03   |  33.00     |  41.91 |   54.56      |
+| MoEQuant  |    4.12         |  7.34    | 69.60|  32.15    |  61.79| 84.98 |   64.05   |  33.60     |  42.95 |   55.58      |
