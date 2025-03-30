@@ -41,16 +41,16 @@ Table R2: Performance of different methods on different models for two tasks (Hu
 
 ---
 
-Table R3: Time Cost Comparison of GPTQ and MoEQuant
+Table R3: Time Cost Comparison of GPTQ and MoEQuant, for EBSS, we implement it on GPU A800, enabling the simultaneous generation of multiple batches of data
 
 | Model            | Method   | Time Cost |
 | ---------------- | -------- | --------- |
-| Qwen-MoE-14B     | GPTQ     |   37mins  |
-|                  | MoEQuant |   54mins  |
-| DeepSeek-MoE-16B | GPTQ     |   41mins  |
-|                  | MoEQuant |   63mins  |
-| Mixtral-8x7B     | GPTQ     |   73mins  |
-|                  | MoEQuant |   97mins  |
+| Qwen-MoE-14B     | GPTQ     |   37 mins  |
+|                  | MoEQuant |   54 mins  |
+| DeepSeek-MoE-16B | GPTQ     |   41 mins  |
+|                  | MoEQuant |   52 mins  | 
+| Mixtral-8x7B     | GPTQ     |   73 mins  |
+|                  | MoEQuant |   115 mins  |
 
 ---
 
