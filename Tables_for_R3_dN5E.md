@@ -1,13 +1,13 @@
 Table R1: The influence of different calibration datasets on the balance of experts and quantization performance, the expert balance std denotes the standard deviation on frequency of experts
 
-| Model | Calib Dataset | Expert Balance STD  | WIKITEXT2 | MMLU | HUMANEVAL | GSM8K | Accuracy AVG | 
-| :--------------: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| DeepSeek-MoE-16B | Float |   \  | 6.51 | 44.60 | 26.83 | 20.16 | 30.53 |
-|                  | RTN   |   \  | 7.47 | 36.10 | 18.90 | 10.54 | 21.84 | 
-|                  | wikitext2 | 0.1327 | 6.67 | 40.60 | 22.56 | 19.18 | 27.45 |
-|                  | humaneval | 0.0877 | 6.85 | 43.60 | 21.34 | 15.39 | 26.79 |
-|                  | gsm8k     | 0.0728 | 6.79 | 43.40 | 21.95 | 18.59 | 27.98 |
-|                  | EBSS      | 0.0052 | 6.77 | 44.00 | 23.78 | 18.19 | 28.65 |
+| Model | Calib Dataset | Expert Balance STD  | WIKITEXT2 | MMLU | HUMANEVAL | GSM8K | BOOLQ| HELLASWAG | OPENBOOKQA | MATHQA | Accuracy AVG | 
+| :--------------: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| DeepSeek-MoE-16B | Float |   \    | 6.51 | 44.60 | 26.83 | 20.16 | 72.72|58.06|32.20|31.49|40.86|
+|                  | RTN   |   \    | 7.47 | 36.10 | 18.90 | 10.54 |70.21|55.76|30.60|28.87|35.85|
+|                  | wikitext2 | 0.0427 | 6.67 | 40.60 | 22.56 | 19.18 | 72.17|57.03|30.60|30.95|39.01|
+|                  | humaneval | 0.0877 | 6.85 | 43.60 | 21.34 | 15.39 | 73.79|56.91|30.80|30.48|38.90|
+|                  | gsm8k     | 0.0928 | 6.88 | 42.40 | 21.65 | 16.59 | 73.57|57.01|30.20|30.72|38.88|
+|                  | EBSS      | 0.0052 | 6.77 | 44.00 | 23.78 | 18.19 | 73.24|57.21|31.80|30.92|39.87|
 
 
 ---
