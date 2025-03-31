@@ -1,3 +1,5 @@
+# Supplementary Tables
+
 **Table R1: The influence of different calibration datasets on the balance of experts and quantization performance, the expert balance std denotes the standard deviation on frequency of experts.**
 
 | Model | Calib Dataset | Expert Balance STD  | WIKITEXT2 | MMLU | HUMANEVAL | GSM8K | BOOLQ| HELLASWAG | OPENBOOKQA | MATHQA | AVG Accuracy | 
@@ -51,42 +53,26 @@
 |     MIXTRAL-8x7B      |         ×          |   4.12   |  55.24   |
 |                       |         √          |   4.12   |  **55.58**   |
 
-**Algorithm R6: EBSS's probability-guided path pruning**
+---
 
-```
-Model = MoE-llm
-NS = number of sentences
-Seqlen = sentence length
-V = vocab_size
-w = 4  # EBSS width
-Final_sentences = []
-for i in NS:
-    first_token = Random(V)
-    next_token = []*w
-    for j in range(Seqlen-1): 
-        logits, EB_score = model(first_token*w+next_token)
-        final_scores = Pruning(logits, EB_score)
-        next_token.append(Topk(final_scores, w))
-    Final_sentences.append([first_token+next_token][argmax(final_scores)])
-```
-    
-**Algorithm R7: AGQ process in Hessian**
-```
-Step_size = input number of samples one step
-Input = input samples (batch,lenght,dimension)
-Cur_samples = current number of samples
-AGQ_scores = Affinity between expert and tokens
+**Table R6: EBSS Time Overhead of Different Models.** EBSS generates 128 sequences of 512 length, all experiments are completed on a single card A800, in order to make full use of the computing power to improve efficiency, we stitch multiple sequences together in the batch dimension.
 
-while Input is not None: 
-    Input = Input*AGQ_scores
-    Input = Input.t()
-    Hessian *= nsamples / (Cur_samples + Step_size)
-    Cur_samples += Step_size
-    Input = math.sqrt(2 / Cur_samples) * Input.float()
-    Hessian += Input.matmul(Input.t())
-```
-        
-         
+| Model            | Time Cost |
+| ---------------- | --------- |
+| Qwen-MoE-14B     |   17 mins  |
+| DeepSeek-MoE-16B |   11 mins  |
+| Mixtral-8x7B     |   42 mins  |
+
+# Supplementary Algorithms
+---
+
+**Algorithm 1: EBSS-based Sentence Generation with Expert-Balanced Pruning**
+![](asserts/Algorithm_1_EBSS.png)
+
+---
+
+**Algorithm 2: AGQ-Enhanced GPTQ Quantization for MoE LLMs**
+![](asserts/Algorithm_2_AGQ.png)
         
 
 
