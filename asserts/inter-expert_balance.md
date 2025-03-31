@@ -55,7 +55,7 @@ where $\mathcal{E}_k \propto \frac{1}{n_k}$ (Lemma 1). Applying the Cauchy-Schwa
 
 $$ \mathcal{E} \geq \frac{1}{\sum_{k=1}^K \frac{n_k}{N} n_k} = \frac{1}{\mathbb{E}[n_k^2]} \propto \text{Var}(n_k) $$
 
-Thus, higher expert imbalance ($\text{Var}(n_k)$↑) results in larger quantization errors.
+Thus, higher expert imbalance $\text{Var}(n_k)\uparrow$ results in larger quantization errors.
 
 ---
 
