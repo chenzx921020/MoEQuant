@@ -50,3 +50,43 @@
 |                       |         √          |   7.70   |  **46.20**   |
 |     MIXTRAL-8x7B      |         ×          |   4.12   |  55.24   |
 |                       |         √          |   4.12   |  **55.58**   |
+
+**Algorithm R6: EBSS's probability-guided path pruning**
+
+```
+Model = MoE-llm
+NS = number of sentences
+Seqlen = sentence length
+V = vocab_size
+w = 4  # EBSS width
+Final_sentences = []
+for i in NS:
+    first_token = Random(V)
+    next_token = []*w
+    for j in range(Seqlen-1): 
+        logits, EB_score = model(first_token*w+next_token)
+        final_scores = Pruning(logits, EB_score)
+        next_token.append(Topk(final_scores, w))
+    Final_sentences.append([first_token+next_token][argmax(final_scores)])
+```
+    
+**Algorithm R7: AGQ process in Hessian**
+```
+Step_size = input number of samples one step
+Input = input samples (batch,lenght,dimension)
+Cur_samples = current number of samples
+AGQ_scores = Affinity between expert and tokens
+
+while Input is not None: 
+    Input = Input*AGQ_scores
+    Input = Input.t()
+    Hessian *= nsamples / (Cur_samples + Step_size)
+    Cur_samples += Step_size
+    Input = math.sqrt(2 / Cur_samples) * Input.float()
+    Hessian += Input.matmul(Input.t())
+```
+        
+         
+        
+
+
