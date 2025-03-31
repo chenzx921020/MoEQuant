@@ -7,7 +7,7 @@
 
 ---
 
-**Table R2: Influence of different temperatures $\tau$ of different models on the final average accuracy on 8 zero-shot tasks.**
+**Table R2: Influence of different temperatures $\tau$ of different models on the final average accuracy on 7 tasks.**
 
 |        τ         |  1.0  |  1.1  |  1.2  |  1.3  |  1.4  |  1.5  |
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -17,7 +17,7 @@
 
 ---
 
-**Table R3： Cosine similarity between the approximate and original outputs after introducing the approximation in Equation 17 for the GateLayer in DeepSeek-MoE-16B under different c values.**
+**Table R3： Cosine similarity between the approximate and original outputs after introducing the approximation in Equation 17 for the GateLayer in DeepSeek-MoE-16B under different c(affinity) values.**
 
 |    c    |  0.1   |  0.2   |  0.3   |  0.4   |  0.5   |  0.6   |  0.7   |  0.8   |  0.9   |
 | :-----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
@@ -30,9 +30,9 @@
 |         Model         | AGQ for Gate-Layer | Wiki PPL | AVG Accuracy |
 | :-------------------: | :----------------: | :------: | :------: |
 |   Qwen-MoE-14B-Chat   |         ×          |   8.74   |  44.41   |
-|                       |         √          |   8.65   |  44.95   |
+|                       |         √          |   8.65   |  **44.95**   |
 | DeepSeek-MoE-16B-Chat |         ×          |   7.77   |  45.87   |
-|                       |         √          |   7.70   |  46.20   |
+|                       |         √          |   7.70   |  **46.20**   |
 |     MIXTRAL-8x7B      |         ×          |   4.12   |  55.24   |
-|                       |         √          |   4.12   |  55.58   |
+|                       |         √          |   4.12   |  **55.58**   |
 

@@ -4,10 +4,10 @@
 | ---------------- | --------------- | :-----------: | :----------: |
 | Qwen-MoE-14B     | Float           |    7.22       |     51.22    |
 |                  | QuaRot+GPTQ     |    8.40       |     46.30    |
-|                  | MoEQuant        |    8.54       |     **49.02**    |
+|                  | MoEQuant        |    8.54       |     **48.62**    |
 | DeepSeek-MoE-16B | Float           |    6.51       |     40.86    |
-|                  | QuaRot+GPTQ     |    7.82       |     32.33    |
-|                  | QuaRot+MoEQuant |    7.90       |     **36.84**    |
+|                  | QuaRot+GPTQ     |    7.82       |     35.33    |
+|                  | QuaRot+MoEQuant |    7.90       |     **37.84**    |
 | Mixtral-8x7B     | Float           |    3.84       |     56.80    |
 |                  | QuaRot+GPTQ     |    4.82       |     50.22    |
 |                  | QuaRot+MoEQuant |    5.03       |     **53.15**    |

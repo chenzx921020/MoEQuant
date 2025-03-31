@@ -1,4 +1,4 @@
-# Supplementary Tables
+## Supplementary Tables
 
 **Table R1: The influence of different calibration datasets on the balance of experts and quantization performance, the expert balance std denotes the standard deviation on frequency of experts.**
 
@@ -30,7 +30,7 @@
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: | ----- |
 | DeepSeek-MoE-16B | 39.77 | 39.80 | 40.01 | 39.98 | 40.01 | 40.00 | 40.10 |
 |   QwenMoE-14B    | 49.19 | 49.45 | 49.59 | 49.59 | 49.61 | 49.60 | 49.63 |
-|   Mixtral-8x7B   | 55.12 | 55.54 | 55.58 | 59.56 | 59.60 | 59.60 | 59.64 |
+|   Mixtral-8x7B   | 55.12 | 55.54 | 55.58 | 55.56 | 55.60 | 55.60 | 55.64 |
 
 ---
 
@@ -59,12 +59,13 @@
 
 | Model            | Time Cost |
 | ---------------- | --------- |
-| Qwen-MoE-14B     |   17 mins  |
-| DeepSeek-MoE-16B |   11 mins  |
+| Qwen-MoE-14B     |   18 mins  |
+| DeepSeek-MoE-16B |   12 mins  |
 | Mixtral-8x7B     |   42 mins  |
 
-# Supplementary Algorithms
 ---
+
+## Supplementary Algorithms
 
 **Algorithm 1: EBSS-based Sentence Generation with Expert-Balanced Pruning**
 ![](asserts/Algorithm_1_EBSS.png)
