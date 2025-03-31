@@ -43,7 +43,7 @@ Estimate the deviation of the expected value of the Hessian
 
 $$ Bias(\hat{H_{ij}}) = E[\hat{H_{ij}}]-H_{ij} \approx O(\epsilon^2)+O(\frac{\sigma^2}{n\epsilon^2}) $$
 
-It can be seen that the second term of the formula is inversely proportional to the sample size n. The larger the n, the smaller the corresponding statistical deviation, and vice versa.
+It can be seen that the second term of the formula is inversely proportional to the sample size n. **The larger the n, the smaller the corresponding statistical deviation, and vice versa.**
 
 
 ## 4. Experimental Validation  
