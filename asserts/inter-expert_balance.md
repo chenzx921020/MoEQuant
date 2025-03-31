@@ -1,7 +1,7 @@
 # The Impact of Expert Imbalance on Hessian Estimation
 
 ## 1. Problem Definition and Background  
-In Hessian-based quantization methods (e.g., GPTQ), the Hessian matrix is utilized for weight compensation to minimize quantization errors. However, the imbalance in calibration set distribution across experts in Mixture-of-Experts (MoE) models significantly affects the accuracy of Hessian estimation. This section theoretically analyzes the impact of expert imbalance on Hessian estimation bias and establishes its relationship with quantization errors.
+There exists a relationship between expert balance and quantization performance. Taking the GPTQ quantization method as an example, it relies on the Hessian matrix to perform weight compensation. Since the optimization of the objective function ensures that the input samples are positively correlated with the Hessian matrix. The imbalance in calibration set distribution across experts in Mixture-of-Experts (MoE) models significantly affects the accuracy of Hessian estimation. This section theoretically analyzes the impact of expert imbalance on Hessian estimation bias and establishes its relationship with quantization errors.
 
 ---
 
@@ -10,54 +10,41 @@ Consider the loss function $L(\mathbf{w})$ with respect to the weight vector $\m
 
 $$ \hat{H}_{ij} = \frac{L(\mathbf{w} + \epsilon \mathbf{e}_i + \epsilon \mathbf{e}_j) - L(\mathbf{w} + \epsilon \mathbf{e}_i) - L(\mathbf{w} + \epsilon \mathbf{e}_j) + L(\mathbf{w})}{\epsilon^2} $$
 
-where $\epsilon$ is a small perturbation, and $\mathbf{e}_i$ is the standard basis vector. Assuming the variance of the loss function estimator is $\text{Var}(L) = \frac{\sigma^2}{n}$ (with $n$ as the calibration set size), the bias of the Hessian estimator is derived as follows:
+where $\epsilon$ is a tiny perturbation, and $\mathbf{e}_i$ is the standard basis vector. 
 
-### **Theorem 1 (Bias of Hessian Estimation)**  
-The expectation of the finite difference Hessian estimator satisfies:
+In many finite - difference formulas for the Hessian (such as the common four-point or five-point difference formulas), the second-order and third-order terms often cancel each other out among several symmetric "positive and negative perturbations"; while the fourth-order term is usually the main source of the final error. If the expansion is only carried out to the third-order, the residual (error term) left by the fourth-order term in the final formula cannot be seen, and it is also impossible to determine whether the impact of this residue on the Hessian approximation is $O(\epsilon^2)$ or larger/smaller.
+### Symmetric difference cancellation oddterm
+Like:
+$$L(w+e_i \epsilon+e_j\epsilon), L (w+e_i\epsilon-e_j\epsilon), L (w-e_i\epsilon+e_j\epsilon), L (w-e_i\epsilon-e_j\epsilon)$$
+
+This kind of symmetric addition and subtraction causes the singular powers of the first and third degree to appear in
+pairs in the difference and cancel each other out. To know whetther the cubic term is completely canceled, we need
+to write it down first: to know what error the quadratic term has after thie difference, we must keep it to the fourth
+order in the Taylor expansion to see how its coefficients appear in the final formula.
+### Keep it to the fourth order to determine the final truncation error
+In the Hessian difference formula, it is often concerned with how accurate the "main term" is, and whether the
+residual error" is $O(\epsilon^2)$ or $O(\epsilon^3)$. Only by explicitly writing the terms fourth-order expansion can we see
+whether they are completely offset in the difference, or only a constantmultiple is left, so as to determine the error
+order of the final formula.
+
+We perform a fourth-order Taylor expansion on the loss function:
+
+$$L(w+\epsilon e_i​+\epsilon e_j​) \approx L(w)+\epsilon \nabla_i​L+\epsilon \nabla_j​L+\frac{\epsilon ^2}{2}​(H_{ii}​+2H_{ij}​+H_{jj}​)+\frac{\epsilon ^3}{6}​(\nabla_{iii​}L+3\nabla_{ijj}​L)+\frac{\epsilon ^4}{24}​(\nabla_{iiii}​L+6\nabla_{iijj}​L+\nabla_{jjjj}​L)$$
+$$L(w+\epsilon e_i​) \approx L(w)+\epsilon \nabla_i​L+\frac{\epsilon ^2}{2}​H_{ii}​+\frac{\epsilon ^3}{6}\nabla_{iii}​L+\frac{\epsilon ^4}{24}​\nabla_{iiii}​L$$
+$$L(w+\epsilon e_j​) ​\approx L(w)+\epsilon \nabla_j​L+\frac{\epsilon ^2}{2}​H_{jj}​+\frac{\epsilon ^3}{6}\nabla_{jjj}​L+\frac{\epsilon ^4}{24}\nabla_{jjjj}​L​$$
+
+$$ \hat{H_{ij}} \approx H_{ij} + \frac{\epsilon^2}{12}(\nabla_{iiii}L+6\nabla_{iijj}L+\nabla_{jjjj}L)+O(\epsilon^4) $$
+
+Assuming the variance of the loss function estimator is $\text{Var}(L) = \frac{\sigma^2}{n}$ (with $n$ as the calibration set size). The larger the number, the smaller the estimated variance of the loss function, that is, the estimation of the true expected loss is more stable. The expectation of the finite difference Hessian estimator satisfies:
 
 $$ \mathbb{E}[\hat{H}_{ij}] = H_{ij} + \mathcal{O}(\epsilon^2) + \mathcal{O}\left(\frac{\sigma^2}{n \epsilon^2}\right) $$
 
-#### **Proof:**  
-Using a Taylor expansion, the loss function terms are approximated as:
+Estimate the deviation of the expected value of the Hessian
 
-$$ L(\mathbf{w} + \epsilon \mathbf{e}_i + \epsilon \mathbf{e}_j) = L(\mathbf{w}) + \epsilon (\partial_i L + \partial_j L) + \frac{\epsilon^2}{2} (\partial_{ii} L + 2\partial_{ij} L + \partial_{jj} L) + \mathcal{O}(\epsilon^3) $$
+$$ Bias(\hat{H_{ij}}) = E[\hat{H_{ij}}]-H_{ij} \approx O(\epsilon^2)+O(\frac{\sigma^2}{n\epsilon^2}) $$
 
-Substituting into the finite difference formula, the leading term becomes $H_{ij}$, with a truncation error $\mathcal{O}(\epsilon^2)$. The variance contribution to the bias is derived as:
+It can be seen that the second term of the formula is inversely proportional to the sample size n. The larger the n, the smaller the corresponding statistical deviation, and vice versa.
 
-$$ \text{Var}(\hat{H}_{ij}) = \frac{4\sigma^2}{n \epsilon^4} \implies \text{Bias term} \propto \frac{\sigma^2}{n \epsilon^2} $$
-
-This completes the proof.
-
----
-
-## 3. Analysis of Expert Imbalance  
-Let $n_k$ denote the calibration sample size for expert $k$, with total samples $N = \sum_{k=1}^K n_k$. Expert imbalance is defined as the variance of sample distribution $\text{Var}(n_k)$.  
-
-### **Lemma 1 (Sample Size and Hessian Bias)**  
-For expert $k$, the estimation bias of its Hessian submatrix $\mathbf{H}^{(k)}$ satisfies:
-
-$$ \text{Bias}(\hat{\mathbf{H}}^{(k)}) \propto \frac{1}{n_k} $$
-
-#### **Proof:**  
-From Theorem 1, with fixed $\epsilon$, the dominant bias term is $\frac{\sigma^2}{n_k \epsilon^2}$. Smaller $n_k$ leads to larger bias. For experts with insufficient samples ($n_k \ll N$), the variance of Hessian estimation increases, failing to capture high-sensitivity weights.
-
-### **Theorem 2 (Imbalance and Quantization Error)**  
-The quantization error $\mathcal{E}$ is lower-bounded by the variance of expert sample distribution:
-
-$$ \mathcal{E} \geq C \cdot \text{Var}(n_k) \quad (C > 0) $$
-
-#### **Proof:**  
-The quantization error decomposes into expert-specific contributions:
-
-$$ \mathcal{E} = \sum_{k=1}^K \frac{n_k}{N} \cdot \mathcal{E}_k $$
-
-where $\mathcal{E}_k \propto \frac{1}{n_k}$ (Lemma 1). Applying the Cauchy-Schwarz inequality:
-
-$$ \mathcal{E} \geq \frac{1}{\sum_{k=1}^K \frac{n_k}{N} n_k} = \frac{1}{\mathbb{E}[n_k^2]} \propto \text{Var}(n_k) $$
-
-Thus, higher expert imbalance $\text{Var}(n_k)\uparrow$ results in larger quantization errors.
-
----
 
 ## 4. Experimental Validation  
 Experiments on DeepSeek-MoE-16B demonstrate the theoretical findings:
