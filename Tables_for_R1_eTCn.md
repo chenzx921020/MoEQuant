@@ -1,4 +1,4 @@
-Table R1: Relative error and perplexity on Wikitext2 after quantizing the weights of DeepSeek-MoE-16B using the RTN quantization algorithm.
+**Table R1: Relative error and perplexity on Wikitext2 after quantizing the weights of DeepSeek-MoE-16B using the RTN quantization algorithm.**
 
 |Bitwidth|2|3|4|5|6|8|Fp16|
 |---|---|---|---|---|---|---|---|
@@ -7,7 +7,7 @@ Table R1: Relative error and perplexity on Wikitext2 after quantizing the weight
 
 ---
 
-Table R2: Influence of different temperatures $\tau$of different models on the final average accuracy on 8 zero-shot tasks
+**Table R2: Influence of different temperatures $\tau$of different models on the final average accuracy on 8 zero-shot tasks.**
 
 |        τ         |  1.0  |  1.1  |  1.2  |  1.3  |  1.4  |  1.5  |
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -17,7 +17,7 @@ Table R2: Influence of different temperatures $\tau$of different models on the f
 
 ---
 
-Table R3： Cosine similarity between the approximate and original outputs after introducing the approximation in Equation 17 for the GateLayer in DeepSeek-MoE-16B under different c values.
+**Table R3： Cosine similarity between the approximate and original outputs after introducing the approximation in Equation 17 for the GateLayer in DeepSeek-MoE-16B under different c values.**
 
 |    c    |  0.1   |  0.2   |  0.3   |  0.4   |  0.5   |  0.6   |  0.7   |  0.8   |  0.9   |
 | :-----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
@@ -25,7 +25,7 @@ Table R3： Cosine similarity between the approximate and original outputs after
 
 ---
 
-Table R4：Influence of introducing AGQ to the Gate-Layer of three MoE LLMs on the average accuracy of WikiPPL and eight zero-shot tasks.
+**Table R4：Influence of introducing AGQ to the Gate-Layer of three MoE LLMs on the average accuracy of WikiPPL and eight zero-shot tasks.**
 
 |         Model         | AGQ for Gate-Layer | Wiki PPL | ACC Mean |
 | :-------------------: | :----------------: | :------: | :------: |

@@ -1,4 +1,4 @@
-Table R1: The influence of different calibration datasets on the balance of experts and quantization performance, the expert balance std denotes the standard deviation on frequency of experts
+**Table R1: The influence of different calibration datasets on the balance of experts and quantization performance, the expert balance std denotes the standard deviation on frequency of experts.**
 
 | Model | Calib Dataset | Expert Balance STD  | WIKITEXT2 | MMLU | HUMANEVAL | GSM8K | BOOLQ| HELLASWAG | OPENBOOKQA | MATHQA | Accuracy AVG | 
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -12,7 +12,7 @@ Table R1: The influence of different calibration datasets on the balance of expe
 
 ---
 
-Table R2: Influence of different temperatures $\tau$ of different models on the final average accuracy on 8 zero-shot tasks.
+**Table R2: Influence of different temperatures $\tau$ of different models on the final average accuracy on 8 zero-shot tasks.**
 
 |        τ         |  1.0  |  1.1  |  1.2  |  1.3  |  1.4  |  1.5  |
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -22,7 +22,7 @@ Table R2: Influence of different temperatures $\tau$ of different models on the 
 
 ---
 
-Table R3: Influence of different width $w$ in EBSS of different models on the final average accuracy on 8 zero-shot tasks.
+**Table R3: Influence of different width $w$ in EBSS of different models on the final average accuracy on 8 zero-shot tasks.**
 
 |       $w$        |   2   |   3   |   4   |   5   |   6   |  10   | 20    |
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: | ----- |
@@ -32,7 +32,7 @@ Table R3: Influence of different width $w$ in EBSS of different models on the fi
 
 ---
 
-Table R4：Cosine similarity between GateLayer in DeepSeek-MoE-16B and the original output after introducing the approximation in Equation 17 under different c values
+**Table R4：Cosine similarity between GateLayer in DeepSeek-MoE-16B and the original output after introducing the approximation in Equation 17 under different c values.**
 
 |    x    |  0.1   |  0.2   |  0.3   |  0.4   |  0.5   |  0.6   |  0.7   |  0.8   |  0.9   |
 | :-----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
@@ -40,7 +40,7 @@ Table R4：Cosine similarity between GateLayer in DeepSeek-MoE-16B and the origi
 
 ---
 
-Table R5：Effect of Gate-Layer on 3 MoE LLMs before and after AGQ
+**Table R5：Effect of Gate-Layer on 3 MoE LLMs before and after AGQ.**
 
 |         Model         | AGQ for Gate-Layer | Wiki PPL | ACC Mean |
 | :-------------------: | :----------------: | :------: | :------: |

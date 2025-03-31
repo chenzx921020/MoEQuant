@@ -1,4 +1,4 @@
-Table R1: Results of RTN, Omniquant, AWQ, GPTQ, Quarot+GPTQ and ours MoEQuant with 4-bit weight quantization among 9 tasks on Qwen-MoE-14B, DeepSeekMoE-16B and Mixtral-8x7B. where + denotes MoEQuant based on AWQ, ++ denotes MoEQuant based on Quarot+GPTQ. Notably, except for our proposed MoEQuant, other methods utilize Wikitext2 as the calibration dataset, which leads to overfitting on Wikitext2. Perplexity measured on the C4 dataset more accurately reflects the performance of different methods
+**Table R1: Results of RTN, Omniquant, AWQ, GPTQ, Quarot+GPTQ and ours MoEQuant with 4-bit weight quantization among 9 tasks on Qwen-MoE-14B, DeepSeekMoE-16B and Mixtral-8x7B.** where + denotes MoEQuant based on AWQ, ++ denotes MoEQuant based on Quarot+GPTQ. Notably, except for our proposed MoEQuant, other methods utilize Wikitext2 as the calibration dataset, which leads to overfitting on Wikitext2. Perplexity measured on the C4 dataset more accurately reflects the performance of different methods
 
 | Model | Method    | WikiText2 PPL ↓ | C4 PPL ↓ | MMLU | HumanEval | GSM8K | BoolQ | Hellaswag | OpenBookQA | MathQA | Accuracy AVG |
 | ----- | --------- | --------------- | -------- | ---- | --------- | ----- | ----- | --------- | ---------- | ------ | ------------ |
@@ -27,7 +27,7 @@ Table R1: Results of RTN, Omniquant, AWQ, GPTQ, Quarot+GPTQ and ours MoEQuant wi
 | | Quarot+GPTQ|4.03|7.67|68.50|27.60|57.92|84.22|64.08|30.60|41.07|53.42|
 | | MoEQuant<sup>++</sup>  |    4.12         |  7.34    | 69.60|  32.15    |  61.79| 84.98 |   64.05   |  33.60     |  42.95 |   55.58      |
 ---
-Table R2: Time Cost Comparison of GPTQ and MoEQuant, for EBSS, we implement it on GPU A800, enabling the simultaneous generation of multiple batches of data
+**Table R2: Time Cost Comparison of GPTQ and MoEQuant, for EBSS, we implement it on GPU A800, enabling the simultaneous generation of multiple batches of data.**
 
 | Model            | Method   | Time Cost |
 | ---------------- | -------- | --------- |
@@ -38,7 +38,7 @@ Table R2: Time Cost Comparison of GPTQ and MoEQuant, for EBSS, we implement it o
 | Mixtral-8x7B     | GPTQ     |   73 mins  |
 |                  | MoEQuant |   115 mins  |
 ---
-Table R3: A snapshot of genrated samples by Qwen-MoE-14B, DeepSeek-MoE-16B and Mixtral 8x7B
+**Table R3: A snapshot of genrated samples by Qwen-MoE-14B, DeepSeek-MoE-16B and Mixtral 8x7B.**
 | Model| Generated Sentences|
 |---|---|
 | Qwen-MoE-14B| ! ### GMAT Club Daily Prep\n\n#### Thank you for using the timer - this advanced tool can estimate your performance and suggest more practice questions. We have subscribed you to Daily Prep Questions via email.\n\nCustomized\nfor You\n\nwe will pick new questions that match your level based on your Timer History\n\nTrack\n\nevery week, we’ll send you an estimated GMAT score based on your performance\n\nPractice\nPays\n\nwe will pick new questions that match your level based on your Timer History......
@@ -59,7 +59,8 @@ Table R3: A snapshot of genrated samples by Qwen-MoE-14B, DeepSeek-MoE-16B and M
 
 
 ---
-Table R4: The influence of different calibration datasets on the balance of experts and quantization performance, the expert balance std denotes the standard deviation on frequency of experts
+
+**Table R4: The influence of different calibration datasets on the balance of experts and quantization performance, the expert balance std denotes the standard deviation on frequency of experts.**
 
 | Model | Calib Dataset | Expert Balance STD  | WIKITEXT2 | MMLU | HUMANEVAL | GSM8K | BOOLQ| HELLASWAG | OPENBOOKQA | MATHQA | Accuracy AVG | 
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
