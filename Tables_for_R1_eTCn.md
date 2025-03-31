@@ -7,13 +7,13 @@
 
 ---
 
-**Table R2: Influence of different temperatures $\tau$of different models on the final average accuracy on 8 zero-shot tasks.**
+**Table R2: Influence of different temperatures $\tau$ of different models on the final average accuracy on 8 zero-shot tasks.**
 
 |        τ         |  1.0  |  1.1  |  1.2  |  1.3  |  1.4  |  1.5  |
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: |
-| DeepSeek-MoE-16B | 39.82 | 39.89 | 40.01 | 39.89 | 39.69 | 39.71 |
-|   QwenMoE-14B    | 49.47 | 49.53 | 49.60 | 49.61 | 49.59 | 49.55 |
-|   Mixtral-8x7B   | 55.54 | 55.54 | 55.58 | 55.49 | 55.51 | 55.44 |
+| DeepSeek-MoE-16B | 39.82 | 39.89 | **40.01** | 39.89 | 39.69 | 39.71 |
+|   QwenMoE-14B    | 49.47 | 49.53 | **49.60** | 49.61 | 49.59 | 49.55 |
+|   Mixtral-8x7B   | 55.54 | 55.54 | **55.58** | 55.49 | 55.51 | 55.44 |
 
 ---
 
@@ -25,9 +25,9 @@
 
 ---
 
-**Table R4：Influence of introducing AGQ to the Gate-Layer of three MoE LLMs on the average accuracy of WikiPPL and eight zero-shot tasks.**
+**Table R4：Influence of introducing AGQ to the Gate-Layer of three MoE LLMs on the WikiPPL and average accuracy of 7 tasks.**
 
-|         Model         | AGQ for Gate-Layer | Wiki PPL | ACC Mean |
+|         Model         | AGQ for Gate-Layer | Wiki PPL | AVG Accuracy |
 | :-------------------: | :----------------: | :------: | :------: |
 |   Qwen-MoE-14B-Chat   |         ×          |   8.74   |  44.41   |
 |                       |         √          |   8.65   |  44.95   |
