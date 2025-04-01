@@ -1,4 +1,4 @@
-**Table R1: Relative error and perplexity on Wikitext2 after quantizing the weights of DeepSeek-MoE-16B using the RTN quantization algorithm.**
+**Table R1:  Impact of Quantization Bitwidth on Relative Error and Perplexity for DeepSeek-MoE-16B on Wikitext2**
 
 |Bitwidth|2|3|4|5|6|8|Fp16|
 |---|---|---|---|---|---|---|---|
@@ -7,7 +7,7 @@
 
 ---
 
-**Table R2: Influence of different temperatures $\tau$ of different models on the final average accuracy on 7 tasks.**
+**Table R2: Effect of Temperature Parameter (τ) on Average Accuracy Across 7 Tasks for Different MoE Models.**
 
 |        τ         |  1.0  |  1.1  |  1.2  |  1.3  |  1.4  |  1.5  |
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -17,7 +17,7 @@
 
 ---
 
-**Table R3： Cosine similarity between the approximate and original outputs after introducing the approximation in Equation 17 for the GateLayer in DeepSeek-MoE-16B under different c(affinity) values.**
+**Table R3： Impact of Affinity Parameter (c) on Cosine Similarity Between Approximate and Original Outputs in DeepSeek-MoE-16B's GateLayer.**
 
 |    c    |  0.1   |  0.2   |  0.3   |  0.4   |  0.5   |  0.6   |  0.7   |  0.8   |  0.9   |
 | :-----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
@@ -25,7 +25,7 @@
 
 ---
 
-**Table R4：Influence of introducing AGQ to the Gate-Layer of three MoE LLMs on the WikiPPL and average accuracy of 7 tasks.**
+**Table R4：Performance Gains from Applying AGQ to the Gate-Layer of MoE Models on WikiPPL and Average Accuracy of 7 Tasks.**
 
 |         Model         | AGQ for Gate-Layer | Wiki PPL | AVG Accuracy |
 | :-------------------: | :----------------: | :------: | :------: |

@@ -1,4 +1,4 @@
-**Table R1: W4A4 Performace of MoEquant on various models.**
+**Table R1: Comparison of W4A4 Quantization Performance of MoEQuant and Quarot on 3 MoE LLMs.** QuaRort is overfitting due to the use of WikiText2 as the calibration set, and the average accuracy on the 7 downstream tasks is more reflective of PTQ performance.
 
 | Model            | Method          | WikiText2 PPL | Avg Accuracy |
 | ---------------- | --------------- | :-----------: | :----------: |
@@ -9,12 +9,12 @@
 |                  | QuaRot+GPTQ     |    7.82       |     35.33    |
 |                  | QuaRot+MoEQuant |    7.90       |     **37.84**    |
 | Mixtral-8x7B     | Float           |    3.84       |     56.80    |
-|                  | QuaRot+GPTQ     |    4.82       |     50.22    |
+|                  | QuaRot+GPTQ     |    4.92       |     50.22    |
 |                  | QuaRot+MoEQuant |    5.03       |     **53.15**    |
 
 ---
 
-**Table R2: Performance of different methods on different models for two tasks (HumanEval and GSM8k) that require multi-step reasoning.**
+**Table R2: Performance of Different Quantization Methods on MoE LLMs across two Multi-step Reasoning Tasks (HumanEval and GSM8k).** "Gain" means the improvement of the current method compared to the previous method. 
 
 | MODEL                 |   METHOD    | HuamnEval |   GSM8K   | AVG Accuracy |  Gain  |
 | --------------------- | :---------: | :-------: | :-------: | :----------: | :----: |
@@ -46,7 +46,7 @@
 
 ---
 
-**Table R3: Time Cost Comparison of GPTQ and MoEQuant, for EBSS, we implement it on GPU A800, enabling the simultaneous generation of multiple batches of data.**
+**Table R3: Time Cost Comparison of GPTQ and MoEQuant.** All test are conducted on a single A800 GPU. MoEQuant needs to generate 128 sequences of 512 length, in order to make full use of the computing power to improve efficiency, we stitch multiple sequences together in the batch dimension.
 
 | Model            | Method   | Time Cost |
 | ---------------- | -------- | --------- |
@@ -59,7 +59,7 @@
 
 ---
 
-**Table R4: 4-bit quantization performance of OmniQuant and MoEQuant on Qwen-MoE-14B.**
+**Table R4: 4-bit Quantization Performance of OmniQuant and MoEQuant on Qwen-MoE-14B.**
 
 | Method    | WikiText2 PPL ↓ | C4 PPL ↓ | MMLU | HumanEval | GSM8K | BoolQ | Hellaswag | OpenBookQA | MathQA | AVG Accuracy |
 | --------- | --------------- | -------- | ---- | --------- | ----- | ----- | --------- | ---------- | ------ | ------------ |
@@ -68,7 +68,7 @@
 | MoEQuant  |    7.55         |  9.62    | 58.30| 29.87     | 58.38 |78.04  | 56.87     | 30.20      | 35.50  |   **49.59**      |
 
 
-**Table R5: 4-bit quantization performance of OmniQuant and MoEQuant on DeepSeek-MoE-16B.**
+**Table R5: 4-bit Quantization Performance of OmniQuant and MoEQuant on DeepSeek-MoE-16B.**
 
 | Method    | WikiText2 PPL ↓ | C4 PPL ↓ | MMLU | HumanEval | GSM8K | BoolQ | Hellaswag | OpenBookQA | MathQA | AVG Accuracy |
 | --------- | --------------- | -------- | ---- | --------- | ----- | ----- | --------- | ---------- | ------ | ------------ |
@@ -76,7 +76,7 @@
 | OmniQuant |     6.79        |   9.49   | 43.50|  21.95    | 18.65 | 73.82 | 56.67     |   32.40    | 31.02  |   39.72      |
 | MoEQuant  |     6.78        |   9.22   | 42.20|  25.00    | 19.18 | 73.49 | 57.20     |   31.40    | 31.66  |   **40.01**      |
 
-**Table R6: 4-bit quantization performance of OmniQuant and MoEQuant on Mixtral-8x7B.**
+**Table R6: 4-bit Quantization Performance of OmniQuant and MoEQuant on Mixtral-8x7B.**
 
 | Method    | WikiText2 PPL ↓ | C4 PPL ↓ | MMLU | HumanEval | GSM8K | BoolQ | Hellaswag | OpenBookQA | MathQA | AVG Accuracy |
 | --------- | --------------- | -------- | ---- | --------- | ----- | ----- | --------- | ---------- | ------ | ------------ |
@@ -86,7 +86,7 @@
 
 ---
 
-**Table R7: Results of RTN, Omniquant, AWQ, GPTQ, Quarot+GPTQ and ours MoEQuant with 4-bit weight quantization among 9 tasks on Qwen-MoE-14B, DeepSeekMoE-16B and Mixtral-8x7B.** where + denotes MoEQuant based on AWQ, ++ denotes MoEQuant based on Quarot+GPTQ. Notably, except for our proposed MoEQuant, other methods utilize Wikitext2 as the calibration dataset, which leads to overfitting on Wikitext2. Perplexity measured on the C4 dataset more accurately reflects the performance of different methods.
+**Table R7: Results of RTN, Omniquant, AWQ, GPTQ, Quarot+GPTQ and ours MoEQuant with 4-bit Weight Quantization among 9 Tasks on Qwen-MoE-14B, DeepSeekMoE-16B and Mixtral-8x7B.** where + denotes MoEQuant based on AWQ, ++ denotes MoEQuant based on Quarot+GPTQ. Notably, except for our proposed MoEQuant, other methods utilize Wikitext2 as the calibration dataset, which leads to overfitting on Wikitext2. Perplexity measured on the C4 dataset more accurately reflects the performance of different methods.
 
 | Model | Method    | WikiText2 PPL ↓ | C4 PPL ↓ | MMLU | HumanEval | GSM8K | BoolQ | Hellaswag | OpenBookQA | MathQA | AVG Accuracy |
 | ----- | --------- | --------------- | -------- | ---- | --------- | ----- | ----- | --------- | ---------- | ------ | ------------ |

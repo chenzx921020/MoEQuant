@@ -1,4 +1,4 @@
-**Table R1: Performance of different methods on different models for two tasks (HumanEval and GSM8k) that require multi-step reasoning.**
+**Table R1: Performance of Different Quantization Methods on MoE LLMs across two  Challenging Multi-step Reasoning Tasks (HumanEval and GSM8k).** "Gain" means the improvement of the current method compared to the previous method. 
 
 | MODEL                 |   METHOD    | HuamnEval |   GSM8K   | AVG Accuracy  |  Gain  |
 | --------------------- | :---------: | :-------: | :-------: | :-------: | :----: |
@@ -26,8 +26,7 @@
 
 ---
 
-**Table R2: Performance of different quantization tasks on MMLU, GSM8K and HumanEval on DeepSeekV2.**
-
+**Table R2: Quantitative Evaluation of Post-Training Quantization Methods on DeepSeekV2 for MMLU, GSM8K, and HumanEval Tasks.** AVG denotes the mean accuracy across the three tasks.
 
 |    Method     | GSM8K | HumanEval | MMLU | AVG  |
 | :-----------: | :---: | :-------: | :--: | ---- |
@@ -38,7 +37,7 @@
 
 ---
 
-**Table R3: Time Cost Comparison of GPTQ and MoEQuant, for EBSS, we implement it on GPU A800, enabling the simultaneous generation of multiple batches of data.**
+**Table R3: Time Cost Analysis of GPTQ vs. MoEQuant for MoE LLM Quantization.** For MoEQuant, it generates 128 sequences of 512 length, in order to make full use of the computing power to improve efficiency, we stitch multiple sequences together in the batch dimension. All experiments are completed on a single card A800.
 
 | Model            | Method   | Time Cost |
 | ---------------- | -------- | --------- |
@@ -47,8 +46,10 @@
 | DeepSeek-MoE-16B | GPTQ     |   41 mins  |
 |                  | MoEQuant |   52 mins  | 
 | Mixtral-8x7B     | GPTQ     |   73 mins  |
-|                  | MoEQuant |   115 mins  |
+|                  | MoEQuant |   105 mins  |
+
 ---
+
 **Table R4: A snapshot of genrated samples by Qwen-MoE-14B, DeepSeek-MoE-16B and Mixtral 8x7B.**
 | Model| Generated Sentences|
 |---|---|
@@ -71,7 +72,7 @@
 
 ---
 
-**Table R5: The influence of different calibration datasets on the balance of experts and quantization performance, the expert balance std denotes the standard deviation on frequency of experts.**
+**Table R5: Impact of Calibration Datasets on Expert Balance and Quantization Performance in MoE LLMs.** The expert balance std denotes the standard deviation on frequency of expert.
 
 | Model | Calib Dataset | Expert Balance STD  | WIKITEXT2 | MMLU | HUMANEVAL | GSM8K | BOOLQ| HELLASWAG | OPENBOOKQA | MATHQA |  AVG Accuracy | 
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |

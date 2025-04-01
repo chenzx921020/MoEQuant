@@ -1,6 +1,6 @@
 ## Supplementary Tables
 
-**Table R1: The influence of different calibration datasets on the balance of experts and quantization performance, the expert balance std denotes the standard deviation on frequency of experts.**
+**Table R1: Impact of Calibration Datasets on Expert Balance and Quantization Performance in MoE LLMs.** The expert balance std denotes the standard deviation on frequency of expert.
 
 | Model | Calib Dataset | Expert Balance STD  | WIKITEXT2 | MMLU | HUMANEVAL | GSM8K | BOOLQ| HELLASWAG | OPENBOOKQA | MATHQA | AVG Accuracy | 
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -14,7 +14,7 @@
 
 ---
 
-**Table R2: Influence of different temperatures $\tau$ of different models on the final average accuracy on 7 tasks.**
+**Table R2:  Impact of Temperature Parameter τ on Average Accuracy Across 7 Tasks for MoE LLMs.**
 
 |        τ         |  1.0  |  1.1  |  1.2  |  1.3  |  1.4  |  1.5  |
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -24,7 +24,7 @@
 
 ---
 
-**Table R3: Influence of different width $w$ in EBSS of different models on the final average accuracy on 7 tasks.**
+**Table R3: Impact of Searching Width $w$ in EBSS on Quantization Accuracy for MoE LLMs Across 7 Tasks.** 
 
 |       $w$        |   2   |   3   |   4   |   5   |   6   |  10   | 20    |
 | :--------------: | :---: | :---: | :---: | :---: | :---: | :---: | ----- |
@@ -34,15 +34,15 @@
 
 ---
 
-**Table R4：Cosine similarity between GateLayer in DeepSeek-MoE-16B and the original output after introducing the approximation in Equation 17 under different c values.**
+**Table R4：Cosine Similarity Between Approximated and Original GateLayer Outputs in DeepSeek-MoE-16B Under Varying c Values (Equation 17).** Higher c values significantly improve alignment with the original gating behavior, achieving near-perfect similarity (≥0.99) for c≥0.5. 
 
-|    x    |  0.1   |  0.2   |  0.3   |  0.4   |  0.5   |  0.6   |  0.7   |  0.8   |  0.9   |
+|    c    |  0.1   |  0.2   |  0.3   |  0.4   |  0.5   |  0.6   |  0.7   |  0.8   |  0.9   |
 | :-----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: |
 | Cos Sim | 0.9090 | 0.9425 | 0.9685 | 0.9874 | 0.9926 | 0.9894 | 0.9949 | 0.9980 | 0.9996 |
 
 ---
 
-**Table R5：Effect of Gate-Layer on 3 MoE LLMs before and after AGQ.**
+**Table R5：Impact of Affinity Guided Quantization on Gate-Layer Performance for Three MoE LLMs.** 
 
 |         Model         | AGQ for Gate-Layer | Wiki PPL | AVG Accuracy |
 | :-------------------: | :----------------: | :------: | :------: |
@@ -55,7 +55,7 @@
 
 ---
 
-**Table R6: EBSS Time Overhead of Different Models.** EBSS generates 128 sequences of 512 length, all experiments are completed on a single card A800, in order to make full use of the computing power to improve efficiency, we stitch multiple sequences together in the batch dimension.
+**Table R6: Time Overhead of EBSS on 3 MoE LLMs.** MoEQuant generates 128 sequences of 512 length, in order to make full use of the computing power to improve efficiency, we stitch multiple sequences together in the batch dimension. All experiments are completed on a single card A800.
 
 | Model            | Time Cost |
 | ---------------- | --------- |
