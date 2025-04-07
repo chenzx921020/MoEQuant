@@ -6,7 +6,6 @@ import os,sys
 import logging
 
 from quant_layers.quant_layer import QuantDecoderLayer,QuantRMSNorm,QuantLinear,QuantEmbedding,Quantizer
-sys.path.append('/data01/home/chenzx/project/qwen_moe')
 import deepseek_moe_16b_chat
 import mixtral_model
 
