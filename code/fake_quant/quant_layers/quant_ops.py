@@ -30,7 +30,7 @@ class H(nn.Module):
             out = hadamard_transform(
                 out.float(), scale=1 / (math.sqrt(out.size(-1)))
             ).to(i_dtype)
-        if self.online_full_had:  # down_proj的输入
+        if self.online_full_had: 
             if self.down_dim != 1:
                 shape = out.shape # (bs,seq_len,dim)
                 out = out.reshape(shape[0],shape[1],-1,self.down_dim).transpose(2,3)
