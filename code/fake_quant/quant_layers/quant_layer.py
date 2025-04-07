@@ -271,11 +271,6 @@ class QuantAttention(nn.Module):
         attn_output = self.pv_matmul(
             attn_weights,value_states
         )  # b h l l @ b h l d -> b h l d
-        # attn_output = ( # 这段注释的代码会在pv_matmul中被完成
-        #     attn_output.transpose(1, 2)
-        #     .contiguous()
-        #     .reshape(bsz, q_len, self.hidden_size)
-        # )  # b h l d -> b l h d -> b l (h d)
         attn_output = self.o_proj(attn_output)
         if not output_attentions:
             attn_weights = None
@@ -371,7 +366,6 @@ class QuantDecoderLayer(nn.Module):
         self.use_weight_quant = use_weight_quant
         self.use_act_quant = use_act_quant
         self.use_fully_quant = use_fully_quant
-        # 1.对所有可能的权重进行量化
         self.self_attn.q_proj.use_weight_quant = use_weight_quant
         self.self_attn.k_proj.use_weight_quant = use_weight_quant
         self.self_attn.v_proj.use_weight_quant = use_weight_quant
@@ -387,7 +381,6 @@ class QuantDecoderLayer(nn.Module):
             self.mlp.experts[i].gate_proj.use_weight_quant = use_weight_quant
             self.mlp.experts[i].up_proj.use_weight_quant =use_weight_quant
             self.mlp.experts[i].down_proj.use_weight_quant =use_weight_quant
-        # 2. 对所有的学术激活进行量化
         self.input_layernorm.use_act_quant = use_act_quant or use_fully_quant 
         self.self_attn.ropek.use_act_quant = use_act_quant or use_fully_quant 
         self.self_attn.v_proj.use_act_quant = use_act_quant or use_fully_quant 
@@ -397,7 +390,6 @@ class QuantDecoderLayer(nn.Module):
         # self.mlp.mul.use_act_quant = use_act_quant or use_fully_quant  
         for i in range(60):
             self.mlp.experts[i].mul.use_act_quant = use_act_quant or use_fully_quant
-        # 3. 全量化(主要针对激活)
         self.self_attn.q_proj.use_act_quant = use_fully_quant
         self.self_attn.k_proj.use_act_quant = use_fully_quant
         self.self_attn.ropeq.use_act_quant = use_fully_quant
@@ -405,7 +397,6 @@ class QuantDecoderLayer(nn.Module):
         self.self_attn.softmax.use_act_quant = use_fully_quant
         self.self_attn.o_proj.use_act_quant = use_fully_quant
         self.resadd1.use_act_quant = use_fully_quant
-        # shared experts
         self.mlp.shared_expert_gate.use_act_quant = use_fully_quant
         self.mlp.shared_expert.gate_proj.use_act_quant = use_fully_quant
         self.mlp.shared_expert.up_proj.use_act_quant = use_fully_quant
