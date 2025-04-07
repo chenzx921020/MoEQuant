@@ -84,10 +84,10 @@ def get_qwen(model_name, hf_token, args):
                     if module.bias is not None:
                         new_module.bias[:module.out_features].copy_(module.bias)
                 parent_name = name.rsplit('.', 1)[0] if '.' in name else ''
-                if parent_name:  # 如果模块不是顶层模块
+                if parent_name:  
                     parent = dict(model.named_modules())[parent_name]
                     setattr(parent, name.split('.')[-1], new_module)
-                else:  # 如果模块是顶层模块
+                else:  
                     setattr(model, name, new_module)
                     
         model.config.intermediate_size += 1024
@@ -95,31 +95,27 @@ def get_qwen(model_name, hf_token, args):
     model.seqlen=2048
     layers = model.model.layers
     args.embed_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,dynamic=True,dynamic_method="perchannel")
-    # 设置每一层的量化参数
     args.weight_quant_params = dict(bits=args.w_bits,sym=not args.w_asym,groupsize=args.w_groupsize,dynamic=True,dynamic_method="pertoken")
-    # 学术量化的激活量化参数
-    args.norm_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) # qkv 的输入量化, up gate的输入量化
-    args.ropek_quant_params = dict(bits=args.a_bits,sym=not args.k_asym,groupsize=args.k_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) # ropek的输出量化
-    args.v_proj_quant_params = dict(bits=args.a_bits,sym=not args.v_asym,groupsize=args.v_groupsize,clip_ratio=args.v_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) # v的输出量化
-    args.pv_matmul_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)# o_proj的输入量化
-    args.mul_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) #down的输入量化
-    # TODO 默认用a_bits,但是仍然可以进行指定
-    # fully_quant相关的激活的量化参数
+    args.norm_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
+    args.ropek_quant_params = dict(bits=args.a_bits,sym=not args.k_asym,groupsize=args.k_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
+    args.v_proj_quant_params = dict(bits=args.a_bits,sym=not args.v_asym,groupsize=args.v_groupsize,clip_ratio=args.v_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
+    args.pv_matmul_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
+    args.mul_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
     # moe block
     args.expert_gate_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
     args.shared_gate_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
     # others
-    args.q_proj_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) # q的输出量化
-    args.ropeq_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) # ropeq的输出量化
-    args.k_proj_quant_params = dict(bits=args.a_bits,sym=not args.k_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) # k的输出量化
-    args.qk_matmul_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)   # qkmat的输出量化
-    args.softmax_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) # softmax的输出量化
+    args.q_proj_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
+    args.ropeq_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
+    args.k_proj_quant_params = dict(bits=args.a_bits,sym=not args.k_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
+    args.qk_matmul_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) 
+    args.softmax_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
     args.o_proj_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method="perchannel") 
     args.resadd1_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.a_clip_ratio,dynamic=True,dynamic_method="perchannel")
-    args.up_proj_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) # up_proj的输出量化
-    args.gate_proj_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) # gate
-    args.silu_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) # silu输入mul的输入
-    args.down_proj_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method="perchannel") # down_proj的输出量化
+    args.up_proj_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method) 
+    args.gate_proj_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
+    args.silu_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method=args.a_dynamic_method)
+    args.down_proj_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method="perchannel") 
     args.resadd2_quant_params = dict(bits=args.a_bits,sym=not args.a_asym,groupsize=args.a_groupsize,clip_ratio=args.k_clip_ratio,dynamic=True,dynamic_method="perchannel")
     for i in range(len(layers)):
         layers[i] = QuantDecoderLayer(model.config,layers[i],args)
