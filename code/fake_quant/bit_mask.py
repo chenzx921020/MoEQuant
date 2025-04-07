@@ -102,34 +102,12 @@ def bit_calib(model, dataloader, dev, args):
                 score2_cnt[selected_experts[m][1]] = score2_cnt[selected_experts[m][1]]+routing_weights[m][1]
                 score3_cnt[selected_experts[m][2]] = score3_cnt[selected_experts[m][2]]+routing_weights[m][2]
                 score4_cnt[selected_experts[m][3]] = score1_cnt[selected_experts[m][3]]+routing_weights[m][3]
-        # 统计128条数据中，每个专家在top1-4出现的次数
         top_cnt = torch.tensor([top1_cnt,top2_cnt,top3_cnt,top4_cnt])
         score_cnt = torch.tensor([score1_cnt,score2_cnt,score3_cnt,score4_cnt])
-        # bit_mask
-        #top_cnt = torch.tensor(top_cnt)
-        # first_row_indices = torch.argsort(top_cnt[0, :], descending=True)
         ave_score = score_cnt.sum(dim=0)/top_cnt.sum(dim=0)
         first_row_indices = torch.argsort(ave_score, descending=True)
         threshold = ave_score[first_row_indices[10]]
         bit_mask[i][ave_score>threshold]=1
-        # sorted_expert = top_cnt[:, first_row_indices]
-        # threshold = sorted_expert[:,10].sum()
-        # for j in range(60):
-        #     if top_cnt[:,j].sum()>threshold:
-        #         bit_mask[i][j] = 1
-        # bit_mask[i][top_cnt[0,:]>threshold]=1
-        #old try
-        # sum_cnt = torch.zeros(4,60)
-        # for idx,single_cnt in enumerate(top_cnt):
-        #     single_cnt = torch.tensor(single_cnt) 
-        #     threshold = single_cnt.median()
-        #     sum_cnt[idx][single_cnt>threshold]=1
-        # # 以中位数为界，划分每个级别的敏感专家
-        # # 利用多数投票策略，给每个专家对应的位宽
-        # score = sum_cnt[0]*0.8+sum_cnt[1]*0.5+sum_cnt[2]*0.25+sum_cnt[3]*0.2
-        # v,idx = torch.sort(score, descending=True)
-        # bit_mask[i][score>=v[20]]=1
-        
         
         for j in range(args.nsamples):
             outs[j] = layer(inps[j].unsqueeze(0), attention_mask=attention_mask, position_ids=position_ids)[0]
