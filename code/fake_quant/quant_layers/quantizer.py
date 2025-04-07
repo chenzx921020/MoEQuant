@@ -26,9 +26,8 @@ class Quantizer(nn.Module):
         self.group_size = groupsize
         self.clip_ratio = clip_ratio # not used
         self.qmax,self.qmin = (2**(bits-1)) -1 if sym else 2**(bits)-1 , -(2**(bits-1)) if sym else 0
-        # 1. dynamic config 可以在合适的时机切换
         self.dynamic = dynamic
-        self.dynamic_method = dynamic_method # 对于权重来说(oc,ic),应该用pertoken来代替perchannel
+        self.dynamic_method = dynamic_method
         if self.bits == 16:
             self.dynamic_method == "pertensor"
         # 2. static config
@@ -65,9 +64,8 @@ class Quantizer(nn.Module):
                 reshaped_x = x.reshape(*ori_shape[:-1],ori_shape[-1] // self.group_size, self.group_size)
                 xmax,xmin = torch.amax(reshaped_x,dim=-1,keepdim=True),torch.amin(reshaped_x,dim=-1,keepdim=True)
             else:
-                 # (b,l,h,d)/(b,l,c) 都是从第二个维度之后开始的 (oc,ic)从第一个维度开始
                 xmax,xmin = torch.amax(x,dim=tuple(range(min(2,x.dim()-1),x.dim())),keepdim=True),torch.amin(x,dim=tuple(range(min(2,x.dim()-1),x.dim())),keepdim=True) 
-        elif self.dynamic_method == "perchannel": # 只保留最后一个维度即可
+        elif self.dynamic_method == "perchannel":
             xmax,xmin = torch.amax(x,dim=list(range(0,x.dim()-1)),keepdim=True),torch.amin(x,dim=(0,1),keepdim=False)
         else:
             raise NotImplemented
@@ -84,7 +82,7 @@ class Quantizer(nn.Module):
             zp = torch.round(-xmin / self.scale)
 
         if self.group_size != -1:
-            scale = scale.repeat(1, 1, 1, self.group_size).reshape(ori_shape)# 假设输入是三维
+            scale = scale.repeat(1, 1, 1, self.group_size).reshape(ori_shape)
             zp = zp.repeat(1, 1, 1, self.group_size).reshape(ori_shape)
         return scale, zp 
     
@@ -92,7 +90,7 @@ class Quantizer(nn.Module):
         if self.dynamic_method == "pertensor":
             return torch.quantile(x.abs(),percent)
         elif self.dynamic_method == "perchannel":
-            return torch.quantile(x.abs().reshape(-1,x.shape[-1]),percent,dim=0) # 保留最后一个维度
+            return torch.quantile(x.abs().reshape(-1,x.shape[-1]),percent,dim=0)
         else:
             raise NotImplemented
     

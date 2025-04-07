@@ -70,10 +70,8 @@ class QuantMoeBlock(nn.Module):
         self.gate = QuantLinear(
             org_module.gate, args.weight_quant_params, args.expert_gate_quant_params
         )
-         #nn.Linear(config.hidden_size, config.num_experts, bias=False)
         self.experts = nn.ModuleList(
             [QuantMLP(org_module.experts[i_expert], config=config, args=args) for i_expert in range(self.num_experts)]
-            # [Qwen2MoeMLP(config, intermediate_size=config.moe_intermediate_size) for _ in range(self.num_experts)]
         )
 
         self.shared_expert = QuantMLP(org_module.shared_expert,config=config, args=args)
@@ -351,7 +349,7 @@ class QuantDecoderLayer(nn.Module):
         # Fully Connected
         residual = hidden_states
         hidden_states = self.post_attention_layernorm(hidden_states)
-        hidden_states = self.mlp(hidden_states,cur_sample)[0] # 仅推理，不需要route logit
+        hidden_states = self.mlp(hidden_states,cur_sample)[0]
         hidden_states = self.resadd2(residual, hidden_states)
 
         outputs = (hidden_states,)
@@ -390,13 +388,13 @@ class QuantDecoderLayer(nn.Module):
             self.mlp.experts[i].up_proj.use_weight_quant =use_weight_quant
             self.mlp.experts[i].down_proj.use_weight_quant =use_weight_quant
         # 2. 对所有的学术激活进行量化
-        self.input_layernorm.use_act_quant = use_act_quant or use_fully_quant  # qkv的输入量化
-        self.self_attn.ropek.use_act_quant = use_act_quant or use_fully_quant  # k的输出量化
-        self.self_attn.v_proj.use_act_quant = use_act_quant or use_fully_quant  # v的输出量化
-        self.self_attn.pv_matmul.use_act_quant = use_act_quant or use_fully_quant  # o_proj的输入量化
-        self.post_attention_layernorm.use_act_quant = use_act_quant or use_fully_quant  # up,gate的输入量化
-        self.mlp.shared_expert.mul.use_act_quant = use_act_quant or use_fully_quant  # 共享专家down的输入量化
-        # self.mlp.mul.use_act_quant = use_act_quant or use_fully_quant  # down的输入量化
+        self.input_layernorm.use_act_quant = use_act_quant or use_fully_quant 
+        self.self_attn.ropek.use_act_quant = use_act_quant or use_fully_quant 
+        self.self_attn.v_proj.use_act_quant = use_act_quant or use_fully_quant 
+        self.self_attn.pv_matmul.use_act_quant = use_act_quant or use_fully_quant 
+        self.post_attention_layernorm.use_act_quant = use_act_quant or use_fully_quant 
+        self.mlp.shared_expert.mul.use_act_quant = use_act_quant or use_fully_quant
+        # self.mlp.mul.use_act_quant = use_act_quant or use_fully_quant  
         for i in range(60):
             self.mlp.experts[i].mul.use_act_quant = use_act_quant or use_fully_quant
         # 3. 全量化(主要针对激活)

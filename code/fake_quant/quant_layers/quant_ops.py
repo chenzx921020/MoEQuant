@@ -8,9 +8,9 @@ from .quantizer import Quantizer
 class H(nn.Module):
     def __init__(self):
         super().__init__()
-        self.use_hadamard_transform = False  # q和k的输出会进行一次这个变换从而变得等价
-        self.online_full_had = False  # down_proj的输入有一个这个
-        self.online_partial_had = False  # o_proj的输入也就是pv_matmul的输出有一个这个
+        self.use_hadamard_transform = False
+        self.online_full_had = False 
+        self.online_partial_had = False 
         self.had_K = None
         self.K = 1
         self.down_dim = 1
@@ -41,7 +41,7 @@ class H(nn.Module):
             init_shape = out.shape  # (b.h,l,c)
             if (
                 self.K == 1
-            ):  # 走这个分支,由于v的weight再head_dim维上做了一个H 因此抵消掉了
+            ):  
                 # out = fast_hadamard_transform.hadamard_transform(out.reshape(-1, init_shape[-1]//self.had_dim, self.had_dim).transpose(1, 2),# (b,l,c) -> (bl,h,c) -> (bl,c,h)
                 #                                                scale=1/math.sqrt(init_shape[-1]//self.had_dim)).transpose(1, 2)
                 out = fast_hadamard_transform.hadamard_transform(
@@ -112,7 +112,7 @@ class QuantMatmul(nn.Module):
         self,
         act_quant_parmas=dict(bits=8, sym=True, dynamic_method="pertoken"),
         matmul_func=torch.matmul,
-        is_pvmat =False, # 如果是pv_mat这种就需要先把(b,h,l,c) 变成 (b,l,hc) 然后再(量化?),
+        is_pvmat =False,
         is_qkmat = False,
     ):
         super().__init__()
@@ -191,13 +191,13 @@ class QuantRMSNorm(nn.Module):
         self.temp_weight = self.temp_bias = None
 
         self.use_act_quant = False
-        self.fuse_weight = False  # 如果weight已经融入,那么就不需要使用weight了
+        self.fuse_weight = False 
 
     def forward(self, hidden_states):
         i_dtype = hidden_states.dtype
         variance = hidden_states.to(torch.float32).pow(2).mean(-1, keepdim=True)
         hidden_states = hidden_states * torch.rsqrt(variance + self.eps)
-        if self.fuse_weight:  # weight已经完全融入了
+        if self.fuse_weight:
             out = hidden_states.to(i_dtype)
         else:
             if self.use_temporary_parameter and self.temp_weight is not None:
@@ -261,9 +261,7 @@ class QuantMul(nn.Module):
 
     def forward(self, x1, x2):
         out = x1 * x2
-        # to do , add api for qwen2 to pad
-        # out = torch.nn.functional.pad(out,(0,1024))
-        # out = self.may_hadamard_transform(out)
+
         if self.use_act_quant:
             out = self.act_quantizer(out)
         return out
